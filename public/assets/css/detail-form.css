@@ -1,0 +1,43 @@
+.op__buttons #add,
+.op__buttons #delete,
+.op__buttons #save {
+    padding: 10px 20px;
+    border: 1px solid lightslategray;
+    border-radius: 5px;
+}
+
+.op__buttons #add {
+    background-color: aquamarine;
+}
+
+.op__buttons #delete {
+    background-color: tomato;
+}
+
+.op__buttons #save {
+    background-color: lightgreen;
+}
+
+.form__container {
+    margin: 20px 0;
+}
+
+.form__container #form-detail {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__container #form-detail div {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.form__container #form-detail div label {
+    display: block;
+    width: 100%;
+}
+
+.form__container #form-detail div input {
+    width: 100%;
+}

@@ -1,0 +1,36 @@
+.container {
+    margin: 20px 50px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.container .op-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container .table-container {
+    width: 50%;
+}
+
+.container .table-container table {
+    width: 100%;
+}
+
+table, td, th {
+    border: 1px solid black;
+}
+
+td, th {
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.chosen {
+    background-color: lightgray;
+}
+
+td {
+    cursor: pointer;
+}
