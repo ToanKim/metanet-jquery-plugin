@@ -44,6 +44,7 @@
                 record.removeClass('chosen');
             }
             
+            // THIS MAY NOT BE PART OF THE PLUGIN
             // If there is only 1 checked box, push to detail form to edit
             if ($('input.check__box[type=checkbox]:checked').length == 1) {
                 $.each($('input.check__box[type=checkbox]:checked').closest('td').nextAll(), function (index) {
@@ -66,6 +67,7 @@
         })
         
         $('.table-container').on('click', 'tbody tr', function (event) {
+            console.count('tr');
             $(this).find('input.check__box[type=checkbox]').trigger('click');
         })
 
@@ -101,7 +103,7 @@
                     return `<tr>
                         <td><input type="checkbox" class="check__box"></td>
                         ${Object.keys(defaultOptions.columns).map((attr, index) => {
-                            return `<td data-input=${index}>${record[attr]}</td>`;
+                            return `<td data-input=${attr}>${record[attr]}</td>`;
                         }).join('')}
                     </tr>`
                 })    

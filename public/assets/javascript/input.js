@@ -10,7 +10,50 @@ $("button#save").on("click", () => {
     // Get updated records that not has .add class or .delete class
     const updates = $('tr.update:not(".delete")')
 
-    console.log(deletes);
+    const addArray = adds.each(function (index) {
+        const data = {
+            'employee_name': $(this).find('td[data-input="employee_name"]').html(),
+            'employee_age': $(this).find('td[data-input="employee_age"]').html(),
+            'employee_salary': $(this).find('td[data-input="employee_salary"]').html(),
+        }
+
+        return createData(apiUrl, data);
+    })
+
+    
+    const deleteArray = deletes.each(function (index) {
+        return deleteData(apiUrl, $(this).find('td[data-input="id"]').html());
+    })
+
+
+    const updateArray = updates.each(function (index) {
+        const data = {
+            'id': $(this).find('td[data-input="id"]').html(),
+            'employee_name': $(this).find('td[data-input="employee_name"]').html(),
+            'employee_age': $(this).find('td[data-input="employee_age"]').html(),
+            'employee_salary': $(this).find('td[data-input="employee_salary"]').html(),
+        }
+
+        return updateData(apiUrl, data);
+    })
+
+    const requestArray = [...deleteArray, ...addArray, ...updateArray];
+
+    $.when.apply(undefined, requestArray).done((response) => {
+        console.log(response);
+
+        // Clear fields
+        $('form input').each(function (index) {
+            $(this).val($(this).prop('defaultValue'));
+        });
+
+        // Clear table
+        $('.table-container').empty();
+        $('.table-container').unbind();
+        initData(apiUrl, $('.table-container').table({}))
+    })
+
+
 });
 
 $("button#update").on('click', () => {
@@ -45,10 +88,15 @@ $("button#add").on("click", () => {
         `<tr class="add">
             <td><input type="checkbox" class="check__box"></td>
             ${detail.map((item, index) => {
-                return `<td data-input=${index}>${item.value}</td>`
+                // Clearing fields
+                const formInput = $(`form input[data-input=${item.name}]`);
+                formInput.val(formInput.prop('defaultValue'));
+
+                return `<td data-input=${item.name}>${item.value}</td>`
             }).join('')}
         </tr>`
     );
+
 
 });
 
