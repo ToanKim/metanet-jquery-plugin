@@ -1,9 +1,14 @@
+.op__buttons #update,
 .op__buttons #add,
 .op__buttons #delete,
 .op__buttons #save {
     padding: 10px 20px;
     border: 1px solid lightslategray;
     border-radius: 5px;
+}
+
+.op__buttons #update {
+    background-color: lightseagreen;
 }
 
 .op__buttons #add {

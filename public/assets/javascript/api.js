@@ -5,7 +5,7 @@ const initData = (url, callback) => {
         accepts: 'application/json',
 
         success: (message) => {
-            console.table(message);
+            // console.table(message);
             callback(message);
         },
         error: (message) => {
@@ -14,51 +14,50 @@ const initData = (url, callback) => {
     });
 }
 
-const createData = (url, data, callback) => {
-    $.ajax({
+const createData = (url, data) => {
+    return $.ajax({
         url: url,
         method: 'POST',
         data: data,
         accepts: 'application/json',
 
-        success: (message) => {
-            console.table(message);
-        },
-        error: (message) => {
-            console.error(message);
-        }
+        // success: (message) => {
+        //     console.table(message);
+        // },
+        // error: (message) => {
+        //     console.error(message);
+        // }
     })
 }
 
-const updateData = (url, data, callback) => {
-    let id = 3;
-    $.ajax({
-        url: `${url}/${id}`,
+const updateData = (url, data) => {
+    return $.ajax({
+        url: `${url}/${data.id}`,
         method: 'PUT',
-        data: {},
+        data: data,
         accepts: 'application/json',
 
-        success: (message) => {
-            console.table(message)
-        },
-        error: (message) => {
-            console.error(message);
-        }
+        // success: (message) => {
+        //     console.table(message)
+        // },
+        // error: (message) => {
+        //     console.error(message);
+        // }
     })
 }
 
-const deleteData = (url, id, callback) => {
-    $.ajax({
+const deleteData = (url, id) => {
+    return $.ajax({
         url: `${url}/${id}`,
         method: 'DELETE',
         data: {},
         accepts: 'application/json',
 
-        success: (message) => {
-            console.table(message)
-        },
-        error: (message) => {
-            console.error(message);
-        }
+        // success: (message) => {
+        //     console.table(message)
+        // },
+        // error: (message) => {
+        //     console.error(message);
+        // }
     })
 }

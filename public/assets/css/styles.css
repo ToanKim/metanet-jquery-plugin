@@ -34,3 +34,16 @@ td, th {
 td {
     cursor: pointer;
 }
+
+.update {
+    background-color: peru;
+}
+
+.add {
+    background-color: lime;
+}
+
+.delete {
+    opacity: 0.5;
+    pointer-events: none;
+}
