@@ -1,3 +1,13 @@
+.op__buttons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.op__buttons button {
+    width: 100px;
+}
+
 .op__buttons #update,
 .op__buttons #add,
 .op__buttons #delete,
@@ -33,7 +43,7 @@
 }
 
 .form__container #form-detail div {
-    margin: 10px;
+    margin: 20px;
     display: flex;
     align-items: center;
 }
@@ -41,8 +51,14 @@
 .form__container #form-detail div label {
     display: block;
     width: 100%;
+    font-weight: bold;
 }
 
 .form__container #form-detail div input {
     width: 100%;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 5px;
+    word-wrap: break-word;
+    word-break: break-all;
 }

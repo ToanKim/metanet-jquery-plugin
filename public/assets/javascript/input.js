@@ -10,37 +10,35 @@ $("button#save").on("click", () => {
     // Get updated records that not has .add class or .delete class
     const updates = $('tr.update:not(".delete")')
 
-    const addArray = adds.each(function (index) {
+    let requestArray = [];
+
+    adds.each(function (index) {
         const data = {
             'employee_name': $(this).find('td[data-input="employee_name"]').html(),
             'employee_age': $(this).find('td[data-input="employee_age"]').html(),
-            'employee_salary': $(this).find('td[data-input="employee_salary"]').html(),
+            'employee_salary': $(this).find('td[data-input="employee_salary"]').html().replace(/,/g, ''),
         }
 
-        return createData(apiUrl, data);
+        requestArray.push(createData(data));
     })
 
-    
-    const deleteArray = deletes.each(function (index) {
-        return deleteData(apiUrl, $(this).find('td[data-input="id"]').html());
+    deletes.each(function (index) {
+        requestArray.push(deleteData($(this).find('td[data-input="id"]').html()));
     })
 
-
-    const updateArray = updates.each(function (index) {
+    updates.each(function (index) {
         const data = {
             'id': $(this).find('td[data-input="id"]').html(),
             'employee_name': $(this).find('td[data-input="employee_name"]').html(),
             'employee_age': $(this).find('td[data-input="employee_age"]').html(),
-            'employee_salary': $(this).find('td[data-input="employee_salary"]').html(),
+            'employee_salary': $(this).find('td[data-input="employee_salary"]').html().replace(/,/g, ''),
         }
 
-        return updateData(apiUrl, data);
+        requestArray.push(updateData(data));
     })
 
-    const requestArray = [...deleteArray, ...addArray, ...updateArray];
-
-    $.when.apply(undefined, requestArray).done((response) => {
-        console.log(response);
+    $('.loading-container').show();
+    $.when(...requestArray).done(function (){
 
         // Clear fields
         $('form input').each(function (index) {
@@ -50,7 +48,32 @@ $("button#save").on("click", () => {
         // Clear table
         $('.table-container').empty();
         $('.table-container').unbind();
-        initData(apiUrl, $('.table-container').table({}))
+
+        // Kinda redundant, don't know how to resolve yet
+        initData($('.table-container').table({
+            columns: {
+                id: {
+                    name: 'ID',
+                    type: 'number',
+                    sortable: true,
+                },
+                employee_name: {
+                    name: 'Employee Name',
+                    type: 'text',
+                    sortable: true,
+                },
+                employee_age: {
+                    name: 'Age',
+                    type: 'number',
+                    sortable: true,
+                },
+                employee_salary: {
+                    name: 'Salary',
+                    type: 'money',
+                    sortable: true,
+                }
+            }
+        }))
     })
 
 
@@ -92,7 +115,7 @@ $("button#add").on("click", () => {
                 const formInput = $(`form input[data-input=${item.name}]`);
                 formInput.val(formInput.prop('defaultValue'));
 
-                return `<td data-input=${item.name}>${item.value}</td>`
+                return `<td data-input=${item.name}>${item.name === 'employee_salary' ? parseInt(item.value).toLocaleString('en') : item.value}</td>`
             }).join('')}
         </tr>`
     );

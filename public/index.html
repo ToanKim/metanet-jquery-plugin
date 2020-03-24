@@ -15,6 +15,9 @@
 
 </head>
 <body>
+    <div class="loading-container">
+        <div class="loader"></div>
+    </div>
     <div class="container">
         <div class="table-container"></div>
         <div class="op-container">
@@ -33,17 +36,17 @@
 
                     <div>
                         <label for="name-input">Employee Name</label>
-                        <input data-input="employee_name" type="text" id="name-input" name="employee_name" value="" required>
+                        <input data-input="employee_name" type="text" id="name-input" name="employee_name" value="" placeholder="e.g John Doe" required>
                     </div>
 
                     <div>
                         <label for="age-input">Age</label>
-                        <input data-input="employee_age" type="number" id="age-input" name="employee_age" min="21" max="64" required>
+                        <input data-input="employee_age" type="number" id="age-input" name="employee_age" min="21" max="64" placeholder="e.g 21" required>
                     </div>
 
                     <div>
                         <label for="salary-input">Salary</label>
-                        <input data-input="employee_salary" type="number" id="salary-input" name="employee_salary" required>
+                        <input data-input="employee_salary" data-type="money" type="number" id="salary-input" name="employee_salary" min="0" placeholder="e.g 10000000" required>
                     </div>
 
 
@@ -53,13 +56,46 @@
     </div>
 
     <script>
-        const apiUrl = 'http://5b0f708f3c5c110014145cc9.mockapi.io/api/nexacro-demo';
         $(document).ready(() => {
-            initData(apiUrl, $('.table-container').table({}))
+            initData($('.table-container').table(
+                {
+                    columns: {
+                        id: {
+                            name: 'ID',
+                            type: 'number',
+                            sortable: true,
+                        },
+                        employee_name: {
+                            name: 'Employee Name',
+                            type: 'text',
+                            sortable: true,
+                        },
+                        employee_age: {
+                            name: 'Age',
+                            type: 'number',
+                            sortable: true,
+                        },
+                        employee_salary: {
+                            name: 'Salary',
+                            type: 'money',
+                            sortable: true,
+                        }
+                    }
+                }
+            ))
         })
+
+        $(document)
+            .ajaxStart(function () {
+                $('.loading-container').show();
+            })
+            .ajaxStop(function () {
+                $('.loading-container').hide();
+            })
 
     </script>
     <script src="assets/javascript/input.js"></script>
+    <script src="assets/javascript/utils.js"></script>
 
 
 </body>
