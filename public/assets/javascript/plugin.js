@@ -2,7 +2,7 @@
     $.fn.table = function(userOptions) {
         const defaultOptions = {
             pagination: {
-                limit: 5,
+                limit: 4,
                 step: 2,
             },
             columns: {}
@@ -57,7 +57,6 @@
         })
         
         $(this).on('click', 'tbody tr', function (event) {
-            console.count('tr');
             $(this).find('input.check__box[type=checkbox]').trigger('click');
         })
 
@@ -138,10 +137,8 @@
             );
 
             // Pagination starts here
-            const dataSize = data.length;
             const pageLimit = allOptions.pagination.limit;
             const pageStep = allOptions.pagination.step;
-            const totalPages = Math.ceil(dataSize / pageLimit);
 
             $('.table-pagination').append(
                 `<a id="button-prev">&#9668;</a>
@@ -166,7 +163,7 @@
             $('.table-pagination').on('click', '#button-next', function () {
                 let current = $('a.current-page').eq(0).html();
 
-                if (parseInt(current) + 1 <= Math.ceil($('tbody tr').length / pageLimit)) {
+                if (parseInt(current) + 1 <= Math.ceil($('tbody tr').length / pageLimit )) {
                     $('a.current-page').eq(0).removeClass('current-page');
                     // Call render function
                     $.renderPagination(pageLimit, pageStep, parseInt(current) + 1);
