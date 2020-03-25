@@ -1,82 +1,107 @@
 .container {
-    margin: 20px 50px;
-    display: flex;
-    justify-content: space-around;
+  margin: 20px 50px;
+  display: flex;
+  justify-content: space-around;
 }
 
 .container .op-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    width: 500px;
+  width: 500px;
 }
 
 .container .op-container .op__buttons,
 .container .op-container .form__container {
-    width: 100%;
+  width: 100%;
 }
 
 .container .table-container {
-    width: 50%;
+  width: 50%;
 }
 
 .container .table-container table {
-    width: 100%;
+  width: 100%;
 }
 
-table, td, th {
-    border: 1px solid black;
+table,
+td,
+th {
+  border: 1px solid black;
 }
 
 thead tr {
-    background-color: cornflowerblue;
-    font-weight: bold;
+  background-color: cornflowerblue;
+  font-weight: bold;
 }
 
-td, th {
-    padding: 10px 20px;
-    text-align: center;
+td,
+th {
+  padding: 10px 20px;
+  text-align: center;
 }
 
 .chosen {
-    background-color: lightgray;
+  background-color: lightgray;
 }
 
 td {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .update {
-    background-color: peru;
+  background-color: peru;
 }
 
 .add {
-    background-color: lime;
+  background-color: lime;
 }
 
 .delete {
-    opacity: 0.5;
-    pointer-events: none;
-    cursor: not-allowed !important;
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed !important;
 }
 
 .sortable {
-    cursor: pointer;
+  cursor: pointer;
 }
 
+/* PAGINATION */
+.table-pagination {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.table-pagination a,
+.table-pagination i#button-prev,
+.table-pagination i#button-next {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid royalblue;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.table-pagination .current-page {
+  background-color: royalblue;
+}
+
+/* END OF PAGINATION */
 
 .loading-container {
-    position: fixed; /* Sit on top of the page content */
-    display: none; 
-    width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  position: fixed; /* Sit on top of the page content */
+  display: none;
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
 }
 /* CSS LOADERS BY lukehaas */
 .loader,
@@ -99,7 +124,6 @@ td {
   transform: translateZ(0);
   -webkit-animation: load8 1.1s infinite linear;
   animation: load8 1.1s infinite linear;
-
 
   top: 30%;
   left: 50%;

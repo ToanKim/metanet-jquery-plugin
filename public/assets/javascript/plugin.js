@@ -2,7 +2,8 @@
     $.fn.table = function(userOptions) {
         const defaultOptions = {
             pagination: {
-                limit: 10
+                limit: 5,
+                step: 2,
             },
             columns: {}
         }
@@ -60,6 +61,8 @@
             $(this).find('input.check__box[type=checkbox]').trigger('click');
         })
 
+
+        // Sort table
         $(this).on('click', 'thead th.sortable', function(index) {
             $(this).siblings('th.sortable').not(this).data('dir', 'none');
             const data = $(this).data('input');
@@ -82,18 +85,20 @@
                     return 0;
                 })
                 $(this).closest('thead').siblings('tbody').append(records);
-
             } else {
                 $(this).data('dir', +!$(this).data('dir'));
                 $(this).closest('thead').siblings('tbody').append(records.get().reverse())
             }
+
+            // Re-render pagination
+            $.renderPagination(allOptions.pagination.limit, allOptions.pagination.step, parseInt($('a.current-page').html()))
         })
 
         // End of Event listeners
 
         $(this).append(
             `
-            <div class="pagination"></div>
+            <div class="table-pagination"></div>
             <table>
                 <thead>
                     <tr>
@@ -133,15 +138,106 @@
             );
 
             // Pagination starts here
-            const offset = allOptions.pagination.limit;
-            const size = data.length;
+            const dataSize = data.length;
+            const pageLimit = allOptions.pagination.limit;
+            const pageStep = allOptions.pagination.step;
+            const totalPages = Math.ceil(dataSize / pageLimit);
 
-            console.log({offset}, {size})
-            
+            $('.table-pagination').append(
+                `<a id="button-prev">&#9668;</a>
+                <span class="pagination__box"></span>
+                <a id="button-next">&#9658;</a>`
+            )
+
+            $.renderPagination(pageLimit, pageStep);
+
+            // Event handlers for navigating
+            $('.table-pagination').on('click', '#button-prev', function () {
+                let current = $('a.current-page').eq(0).html();
+
+                if (parseInt(current) - 1 >= 1) {
+                    $('a.current-page').eq(0).removeClass('current-page');
+                    // Call render function
+                    $.renderPagination(pageLimit, pageStep, parseInt(current) - 1);
+                }
+
+            })
+
+            $('.table-pagination').on('click', '#button-next', function () {
+                let current = $('a.current-page').eq(0).html();
+
+                if (parseInt(current) + 1 <= Math.ceil($('tbody tr').length / pageLimit)) {
+                    $('a.current-page').eq(0).removeClass('current-page');
+                    // Call render function
+                    $.renderPagination(pageLimit, pageStep, parseInt(current) + 1);
+                }
+            })
+
+            $('.table-pagination').on('click', '.page-index', function () {
+                let index = $(this).html();
+                // Call render function
+                $.renderPagination(pageLimit, pageStep, parseInt(index));
+            })
             // Pagination ends here
 
             return this;
         }
         return addData;
     }
+
+    $.renderPagination = function (limit, step, index = 1) {
+        const size = Math.ceil($('tbody tr').length / limit);
+
+        // 4 situations
+        // 1 - No ... at both sides
+        // 2 - ... only at start
+        // 3 - ... only at end
+        // 4 - ... on both sides
+        let code = '';
+        // No ... both sides
+        if (size < step * 2 + 4) {
+            code += $.renderNumber(1, size);
+        }
+        // ... at start 
+        else if (index > size - step * 2) {
+            code += $.renderDots(true);
+            code += $.renderNumber(index - step, size);
+        }
+        // ... at end
+        else if (index < step * 2 + 1) {
+            code += $.renderNumber(1, index + step);
+            code += $.renderDots(false, size);
+        } else {
+            code += $.renderDots(true);
+            code += $.renderNumber(index - step, index + step);
+            code += $.renderDots(false, size);
+        }
+
+        $('.table-pagination span.pagination__box').empty().append(code);
+        $('.table-pagination span.pagination__box a').each(function (i) {
+            if ($(this).html() === index.toString()) {
+                $(this).addClass('current-page')
+            }
+        })
+
+        // 
+        $('tbody tr').slice((index - 1) * limit, (index * limit)).show();
+        $('tbody tr').not($('tbody tr').slice((index - 1) * limit, (index * limit))).hide();
+    }
+
+    $.renderDots = function (isStart, number = 1) {
+        return isStart ? 
+                `<a class="page-index">${number}</a><i>...</i>` : 
+                `<i>...</i><a class="page-index">${number}</a>`;
+    }
+
+    $.renderNumber = function (start, end) {
+        let tempStr = '';
+        for (let i = start; i <= end; i++) {
+            tempStr += `<a class="page-index">${i}</a>`;
+        }
+        return tempStr;
+    }
+
+
 }(jQuery));
