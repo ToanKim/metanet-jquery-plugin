@@ -1,0 +1,68 @@
+table {
+  width: 100%;
+}
+
+table,
+td,
+th {
+  border: 1px solid black;
+}
+
+thead tr {
+  background-color: cornflowerblue;
+  font-weight: bold;
+}
+
+td,
+th {
+  padding: 10px 20px;
+  text-align: center;
+}
+
+.chosen {
+  background-color: lightgray;
+}
+
+td {
+  cursor: pointer;
+}
+
+.sortable {
+  cursor: pointer;
+}
+
+/* PAGINATION */
+.table-pagination {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.table-pagination a,
+.table-pagination i#button-prev,
+.table-pagination i#button-next {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid royalblue;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.table-pagination .current-page {
+  background-color: royalblue;
+}
+
+/* END OF PAGINATION */
+
+.loading-container {
+  position: fixed; /* Sit on top of the page content */
+  display: none;
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+}

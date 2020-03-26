@@ -2,10 +2,11 @@
     $.fn.table = function(userOptions) {
         const defaultOptions = {
             pagination: {
-                limit: 4,
+                limit: 10,
                 step: 2,
             },
-            columns: {}
+            columns: {},
+            resizable: true
         }
 
         const allOptions = $.extend(defaultOptions, userOptions)
@@ -109,9 +110,7 @@
                                 return `<th ${allOptions.columns[item].sortable ? 'class="sortable"' : ''}
                                             data-input=${item}
                                             data-dir="none"
-                                            data-type=${allOptions.columns[item].type}>
-                                            ${allOptions.columns[item].name}
-                                        </th>`;
+                                            data-type=${allOptions.columns[item].type}>${allOptions.columns[item].name}</th>`;
                             }).join('')
                         }
                     </tr>
@@ -121,6 +120,69 @@
                 </tbody>
             </table>`
         );
+
+
+        // Resizable columns
+        if (allOptions.resizable === true) {
+            let isColResizing = false;
+            let resizingPosX = 0;
+
+            $(this).find('table thead th').each(function (index) {
+                $(this).css('position', 'relative');
+                if ($(this).is(':not(:last-child)')) {
+                    $(this).append("<div class='resizer' style='position:absolute;top:0px;right:-3px;bottom:0px;width:6px;z-index:999;background:transparent;cursor:col-resize'></div>");
+                }
+            })
+
+            $(document).mouseup(function (event) {
+                $(this).find('table thead th').removeClass('resizing');
+                isColResizing = false;
+
+                // Enable pointer events on other elements
+                $('table thead th.sortable, table tbody tr').css("pointer-events", "auto");
+
+                event.stopPropagation();
+            })
+
+            $(this).on('mousedown', 'table thead th div.resizer', function (event) {
+                $('table thead th').removeClass('resizing');
+                $(this).closest('th').addClass('resizing');
+                
+                resizingPosX = event.pageX;
+                isColResizing = true;
+
+                // Disable pointer events on other elements
+                $('table thead th.sortable, table tbody tr').css("pointer-events", "none");
+
+                event.stopPropagation();
+
+            })
+
+            $(this).on('mousemove', 'table', function (event) {
+                if (isColResizing) {
+                    const resizer = $(this).find('thead th.resizing .resizer');
+
+                    if (resizer.length == 1) {
+                        const nextColumn = $(this).find('thead th.resizing + th');
+                        const mouseX = event.pageX || 0;
+                        const widthDiff = mouseX - resizingPosX;
+
+                        const currColWidth = resizer.closest('th').innerWidth() + widthDiff;
+                        const nextColWidth = nextColumn.innerWidth() - widthDiff;
+
+                        console.log(widthDiff);
+
+                        if (resizingPosX != 0 && widthDiff != 0 && currColWidth > 100 && nextColWidth > 100) {
+                            resizer.closest('th').innerWidth(currColWidth);
+                            resizingPosX = event.pageX;
+                            nextColumn.innerWidth(nextColWidth);
+                        }
+                    }
+                }
+            })
+        }
+
+        // End of resizable columns
 
 
         // Callback to load data
@@ -217,7 +279,7 @@
             }
         })
 
-        // 
+        // Re-render records
         $('tbody tr').slice((index - 1) * limit, (index * limit)).show();
         $('tbody tr').not($('tbody tr').slice((index - 1) * limit, (index * limit))).hide();
     }
