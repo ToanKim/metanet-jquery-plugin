@@ -84,7 +84,9 @@ $("button#update").on('click', () => {
     $.each(checkedRow.closest('td').nextAll(), function (index) {
         const input = $(this).data('input');
         const formInput = $(`form input[data-input=${input}]`);
-        $(this).html(formInput.val());
+        const type = formInput.data('type');
+
+        $(this).html(type == 'money' ? parseInt(formInput.val()).toLocaleString('en') : formInput.val());
 
         // Empty form input
         formInput.val(formInput.prop('defaultValue'));

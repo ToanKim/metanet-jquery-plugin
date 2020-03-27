@@ -39,7 +39,7 @@
             if ($('input.check__box[type=checkbox]:checked').length == 1) {
                 $.each($('input.check__box[type=checkbox]:checked').closest('td').nextAll(), function (index) {
                     const input = $(this).data('input');
-                    $(`form input[data-input=${input}]`).val($(this).html());
+                    $(`form input[data-input=${input}]`).val($(this).html().replace(/,/g, ''));
                 })
             } else {
                 // Empty form
@@ -64,7 +64,7 @@
 
         // Sort table
         $(this).on('click', 'thead th.sortable', function(index) {
-            $(this).siblings('th.sortable').not(this).data('dir', 'none');
+            $(this).siblings('th.sortable').data('dir', 'none');
             const data = $(this).data('input');
             const type = $(this).data('type');
 
