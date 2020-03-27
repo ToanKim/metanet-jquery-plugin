@@ -137,7 +137,6 @@
             $(document).mouseup(function (event) {
                 $(this).find('table thead th').removeClass('resizing');
                 isColResizing = false;
-
                 // Enable pointer events on other elements
                 $('table thead th.sortable, table tbody tr').css("pointer-events", "auto");
 
@@ -147,15 +146,12 @@
             $(this).on('mousedown', 'table thead th div.resizer', function (event) {
                 $('table thead th').removeClass('resizing');
                 $(this).closest('th').addClass('resizing');
-                
                 resizingPosX = event.pageX;
                 isColResizing = true;
-
                 // Disable pointer events on other elements
                 $('table thead th.sortable, table tbody tr').css("pointer-events", "none");
 
                 event.stopPropagation();
-
             })
 
             $(this).on('mousemove', 'table', function (event) {
@@ -166,11 +162,8 @@
                         const nextColumn = $(this).find('thead th.resizing + th');
                         const mouseX = event.pageX || 0;
                         const widthDiff = mouseX - resizingPosX;
-
                         const currColWidth = resizer.closest('th').innerWidth() + widthDiff;
                         const nextColWidth = nextColumn.innerWidth() - widthDiff;
-
-                        console.log(widthDiff);
 
                         if (resizingPosX != 0 && widthDiff != 0 && currColWidth > 100 && nextColWidth > 100) {
                             resizer.closest('th').innerWidth(currColWidth);
