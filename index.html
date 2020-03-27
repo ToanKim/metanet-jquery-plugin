@@ -58,32 +58,34 @@
 
     <script>
         $(document).ready(() => {
-            initData($('.table-container').table(
-                {
-                    columns: {
-                        id: {
-                            name: 'ID',
-                            type: 'number',
-                            sortable: true,
-                        },
-                        employee_name: {
-                            name: 'Employee Name',
-                            type: 'text',
-                            sortable: true,
-                        },
-                        employee_age: {
-                            name: 'Age',
-                            type: 'number',
-                            sortable: true,
-                        },
-                        employee_salary: {
-                            name: 'Salary',
-                            type: 'money',
-                            sortable: true,
+            initData(function (data) {
+                $('.table-container').table(data,
+                    {
+                        columns: {
+                            id: {
+                                name: 'ID',
+                                type: 'number',
+                                sortable: true,
+                            },
+                            employee_name: {
+                                name: 'Employee Name',
+                                type: 'text',
+                                sortable: true,
+                            },
+                            employee_age: {
+                                name: 'Age',
+                                type: 'number',
+                                sortable: true,
+                            },
+                            employee_salary: {
+                                name: 'Salary',
+                                type: 'money',
+                                sortable: true,
+                            }
                         }
                     }
-                }
-            ))
+            )
+            })
         })
 
         $(document)

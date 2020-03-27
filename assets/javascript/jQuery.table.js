@@ -1,5 +1,5 @@
 (function ($) {
-    $.fn.table = function(userOptions) {
+    $.fn.table = function(data, userOptions) {
         const defaultOptions = {
             pagination: {
                 limit: 10,
@@ -186,62 +186,62 @@
 
 
         // Callback to load data
-        const addData = function (data) {
-            $('table tbody').append(
-                data.map(record => {
-                    return `<tr>
-                        <td><input type="checkbox" class="check__box"></td>
-                        ${Object.keys(allOptions.columns).map((attr, index) => {
-                            return `<td data-input=${attr}>${allOptions.columns[attr].type === 'money' ? parseInt(record[attr]).toLocaleString('en') : record[attr] }</td>`;
-                        }).join('')}
-                    </tr>`
-                })    
-            );
+        // const addData = function (data) {
+        $('table tbody').append(
+            data.map(record => {
+                return `<tr>
+                    <td><input type="checkbox" class="check__box"></td>
+                    ${Object.keys(allOptions.columns).map((attr, index) => {
+                        return `<td data-input=${attr}>${allOptions.columns[attr].type === 'money' ? parseInt(record[attr]).toLocaleString('en') : record[attr] }</td>`;
+                    }).join('')}
+                </tr>`
+            })    
+        );
 
-            // Pagination starts here
-            const pageLimit = allOptions.pagination.limit;
-            const pageStep = allOptions.pagination.step;
+        // Pagination starts here
+        const pageLimit = allOptions.pagination.limit;
+        const pageStep = allOptions.pagination.step;
 
-            $('.table-pagination').append(
-                `<a id="button-prev">&#9668;</a>
-                <span class="pagination__box"></span>
-                <a id="button-next">&#9658;</a>`
-            )
+        $('.table-pagination').append(
+            `<a id="button-prev">&#9668;</a>
+            <span class="pagination__box"></span>
+            <a id="button-next">&#9658;</a>`
+        )
 
-            $.renderPagination(pageLimit, pageStep);
+        $.renderPagination(pageLimit, pageStep);
 
-            // Event handlers for navigating
-            $('.table-pagination').on('click', '#button-prev', function () {
-                let current = $('a.current-page').eq(0).html();
+        // Event handlers for navigating
+        $('.table-pagination').on('click', '#button-prev', function () {
+            let current = $('a.current-page').eq(0).html();
 
-                if (parseInt(current) - 1 >= 1) {
-                    $('a.current-page').eq(0).removeClass('current-page');
-                    // Call render function
-                    $.renderPagination(pageLimit, pageStep, parseInt(current) - 1);
-                }
-
-            })
-
-            $('.table-pagination').on('click', '#button-next', function () {
-                let current = $('a.current-page').eq(0).html();
-
-                if (parseInt(current) + 1 <= Math.ceil($('tbody tr').length / pageLimit )) {
-                    $('a.current-page').eq(0).removeClass('current-page');
-                    // Call render function
-                    $.renderPagination(pageLimit, pageStep, parseInt(current) + 1);
-                }
-            })
-
-            $('.table-pagination').on('click', '.page-index', function () {
-                let index = $(this).html();
+            if (parseInt(current) - 1 >= 1) {
+                $('a.current-page').eq(0).removeClass('current-page');
                 // Call render function
-                $.renderPagination(pageLimit, pageStep, parseInt(index));
-            })
-            // Pagination ends here
+                $.renderPagination(pageLimit, pageStep, parseInt(current) - 1);
+            }
 
-            return this;
-        }
-        return addData;
+        })
+
+        $('.table-pagination').on('click', '#button-next', function () {
+            let current = $('a.current-page').eq(0).html();
+
+            if (parseInt(current) + 1 <= Math.ceil($('tbody tr').length / pageLimit )) {
+                $('a.current-page').eq(0).removeClass('current-page');
+                // Call render function
+                $.renderPagination(pageLimit, pageStep, parseInt(current) + 1);
+            }
+        })
+
+        $('.table-pagination').on('click', '.page-index', function () {
+            let index = $(this).html();
+            // Call render function
+            $.renderPagination(pageLimit, pageStep, parseInt(index));
+        })
+        // Pagination ends here
+
+        //     return this;
+        // }
+        return this;
     }
 
     $.renderPagination = function (limit, step, index = 1) {
