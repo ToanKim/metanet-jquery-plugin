@@ -50,36 +50,44 @@ $("button#save").on("click", () => {
         $('.table-container').unbind();
 
         // Kinda redundant, don't know how to resolve yet
-        initData($('.table-container').table({
-            columns: {
-                id: {
-                    name: 'ID',
-                    type: 'number',
-                    sortable: true,
-                },
-                employee_name: {
-                    name: 'Employee Name',
-                    type: 'text',
-                    sortable: true,
-                },
-                employee_age: {
-                    name: 'Age',
-                    type: 'number',
-                    sortable: true,
-                },
-                employee_salary: {
-                    name: 'Salary',
-                    type: 'money',
-                    sortable: true,
+        initData(function (data) {
+            $('.table-container').table(data,
+                {
+                    columns: {
+                        id: {
+                            name: 'ID',
+                            type: 'number',
+                            sortable: true,
+                        },
+                        employee_name: {
+                            name: 'Employee Name',
+                            type: 'text',
+                            sortable: true,
+                        },
+                        employee_age: {
+                            name: 'Age',
+                            type: 'number',
+                            sortable: true,
+                        },
+                        employee_salary: {
+                            name: 'Salary',
+                            type: 'money',
+                            sortable: true,
+                        }
+                    }
                 }
-            }
-        }))
+        )
+        })
     })
 
 
 });
 
 $("button#update").on('click', () => {
+    if (isValid() === false) {
+        return;
+    }
+
     const checkedRow = $('input.check__box[type=checkbox]:checked');
     $.each(checkedRow.closest('td').nextAll(), function (index) {
         const input = $(this).data('input');
@@ -102,7 +110,10 @@ $("button#update").on('click', () => {
 })
 
 $("button#add").on("click", () => {
-    
+    if (isValid() === false) {
+        return;
+    }
+
     const form = $('#form-detail');
     const disableInput = form.find('input:disabled').removeAttr('disabled');
     const detail = form.find('input').serializeArray();
@@ -135,3 +146,48 @@ $("button#delete").on("click", () => {
         $(this).find('td input[type=checkbox]').prop('checked', false).removeClass('check__box');
     })
 });
+
+function isValid() {
+    $('#form-detail input').removeClass('border--invalid');
+    let errors = [];
+    $('#form-detail input').each(function (index) {
+        if ($(this).prop('required') && $(this).val().toString() === '') {
+            errors.push({
+                name: `${$(this).siblings('label').html()} input`,
+                type: `Empty Field`,
+            })
+            $(this).addClass('border--invalid');
+            return;
+        }
+
+        if ($(this).data('input') === 'employee_name' && /^[a-zA-Z]+(\s[a-zA-Z]+)*$/g.test($(this).val().toString()) == false) {
+            errors.push({
+                name: `${$(this).siblings('label').html()} input`,
+                type: `Invalid Name`
+            })
+            $(this).addClass('border--invalid');
+
+        } else if ($(this).data('input') === 'employee_age' && ($(this).val() < 21 || $(this).val() > 64)) {
+            errors.push({
+                name: `${$(this).siblings('label').html()} input`,
+                type: `Invalid Age (from 21 - 64)`
+            })
+            $(this).addClass('border--invalid');
+
+        } else if ($(this).data('input') === 'employee_salary' && $(this).val() < 0) {
+            errors.push({
+                name: `${$(this).siblings('label').html()} input`,
+                type: `Invalid Salary (greater than 0)`
+            })
+            $(this).addClass('border--invalid');
+
+        }
+    })
+
+    const error_box = $('#form-detail .error__box').empty();
+    errors.map(error => {
+        error_box.append(`<p>${error.name}: ${error.type}</p>`);
+    })
+
+    return errors.length == 0 ? true : false;
+}
