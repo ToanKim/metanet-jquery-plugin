@@ -108,6 +108,7 @@
                         ${
                             Object.keys(allOptions.columns).map((item) => {
                                 return `<th ${allOptions.columns[item].sortable ? 'class="sortable"' : ''}
+                                            style="max-width: ${allOptions.columns[item].max_width}; min-width: ${allOptions.columns[item].min_width}"
                                             data-input=${item}
                                             data-dir="none"
                                             data-type=${allOptions.columns[item].type}>${allOptions.columns[item].name}</th>`;
@@ -162,10 +163,21 @@
                         const nextColumn = $(this).find('thead th.resizing + th');
                         const mouseX = event.pageX || 0;
                         const widthDiff = mouseX - resizingPosX;
-                        const currColWidth = resizer.closest('th').innerWidth() + widthDiff;
-                        const nextColWidth = nextColumn.innerWidth() - widthDiff;
 
-                        if (resizingPosX != 0 && widthDiff != 0 && currColWidth > 100 && nextColWidth > 100) {
+                        const currColWidth = resizer.closest('th').innerWidth() + widthDiff;
+                        const currColMinWidth = parseInt(resizer.closest('th').css('min-width'), 10);
+                        const currColMaxWidth = parseInt(resizer.closest('th').css('max-width'), 10);
+
+                        const nextColWidth = nextColumn.innerWidth() - widthDiff;
+                        const nextColMinWidth = parseInt(nextColumn.css('min-width'), 10);
+                        const nextColMaxWidth = parseInt(nextColumn.css('max-width'), 10);
+
+                        console.log({currColMaxWidth, currColWidth, nextColMaxWidth, nextColWidth})
+
+                        if (resizingPosX != 0 && widthDiff != 0 && 
+                            currColWidth > currColMinWidth && nextColWidth > nextColMinWidth && 
+                            currColWidth < currColMaxWidth && nextColWidth < nextColMaxWidth) 
+                        {
                             resizer.closest('th').innerWidth(currColWidth);
                             resizingPosX = event.pageX;
                             nextColumn.innerWidth(nextColWidth);

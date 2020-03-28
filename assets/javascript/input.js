@@ -57,21 +57,29 @@ $("button#save").on("click", () => {
                         id: {
                             name: 'ID',
                             type: 'number',
+                            max_width: '100px',
+                            min_width: '30px',
                             sortable: true,
                         },
                         employee_name: {
                             name: 'Employee Name',
                             type: 'text',
+                            max_width: '250px',
+                            min_width: '50px',
                             sortable: true,
                         },
                         employee_age: {
                             name: 'Age',
                             type: 'number',
+                            max_width: '250px',
+                            min_width: '50px',
                             sortable: true,
                         },
                         employee_salary: {
                             name: 'Salary',
                             type: 'money',
+                            max_width: '250px',
+                            min_width: '50px',
                             sortable: true,
                         }
                     }
