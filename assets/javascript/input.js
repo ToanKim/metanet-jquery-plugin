@@ -95,11 +95,11 @@ $("button#update").on('click', () => {
         const type = formInput.data('type');
 
         $(this).html(type == 'money' ? parseInt(formInput.val()).toLocaleString('en') : formInput.val());
-
-        // Empty form input
-        formInput.val(formInput.prop('defaultValue'));
     })
     checkedRow.prop('checked', false);
+
+    // Clear form
+    clearForm();
 
     // .add and .update class
     const row = checkedRow.closest('tr');
@@ -115,23 +115,21 @@ $("button#add").on("click", () => {
     }
 
     const form = $('#form-detail');
-    const disableInput = form.find('input:disabled').removeAttr('disabled');
     const detail = form.find('input').serializeArray();
-    disableInput.attr('disabled', 'disabled');
 
     // Add new row to the table
     $("table tbody").prepend(
         `<tr class="add">
             <td><input type="checkbox" class="check__box"></td>
+            <td data-input="id"></td>
             ${detail.map((item, index) => {
-                // Clearing fields
-                const formInput = $(`form input[data-input=${item.name}]`);
-                formInput.val(formInput.prop('defaultValue'));
-
                 return `<td data-input=${item.name}>${item.name === 'employee_salary' ? parseInt(item.value).toLocaleString('en') : item.value}</td>`
             }).join('')}
         </tr>`
     );
+    
+    // Clear form
+    clearForm();
 
 
 });
@@ -145,6 +143,9 @@ $("button#delete").on("click", () => {
         $(this).addClass('delete');
         $(this).find('td input[type=checkbox]').prop('checked', false).removeClass('check__box');
     })
+
+    // Clear form
+    clearForm();
 });
 
 function isValid() {
@@ -190,4 +191,10 @@ function isValid() {
     })
 
     return errors.length == 0 ? true : false;
+}
+
+function clearForm() {
+    $('#form-detail input').each(function (index) {
+        $(this).val($(this).prop('defaultValue'));
+    })
 }
