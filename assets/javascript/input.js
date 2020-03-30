@@ -137,7 +137,7 @@ $("button#add").on("click", () => {
     );
     
     // Clear form
-    clearForm();
+    // clearForm();
 
 
 });
