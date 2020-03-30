@@ -6,14 +6,16 @@
 
 .op__buttons button {
     width: 100px;
-    box-shadow: 0px 4px #999;
+    box-shadow: 0px 4px rgb(161, 161, 161);
     padding: 10px 20px;
-    border: 1px solid #000;
+    border: 1px solid rgb(139, 139, 139);
     border-radius: 5px;
+
+    margin-right: 10px;
 }
 
 .op__buttons button:active {
-    box-shadow: 0px 2px #999;
+    box-shadow: 0px 2px rgb(161, 161, 161);
     transform: translateY(2px);
 }
 
@@ -57,7 +59,7 @@
 .form__container #form-detail div input {
     width: 100%;
     padding: 10px;
-    border: 1px solid;
+    border: 1px solid rgb(139, 139, 139);
     border-radius: 5px;
     word-wrap: break-word;
     word-break: break-all;

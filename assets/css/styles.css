@@ -8,9 +8,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  width: 500px;
 }
+
 
 .container .op-container .op__buttons,
 .container .op-container .form__container {
@@ -84,5 +83,22 @@
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
+  }
+}
+
+
+@media only screen and (max-width: 1200px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .container .table-container {
+    margin: 0 auto 20px;
+    width: 100%;
+  }
+
+  .container .op-container {
+    margin: 0 auto 20px;
+    width: 80%;
   }
 }
