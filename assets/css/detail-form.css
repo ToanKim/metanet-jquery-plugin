@@ -62,12 +62,13 @@
     padding: 10px;
     border: 1px solid rgb(139, 139, 139);
     border-radius: 5px;
+    box-sizing: border-box;
     word-wrap: break-word;
     word-break: break-all;
 }
 
 .form__container #form-detail div.form-control div.input-control .error__text {
-    padding: 10px 0 0;
+    margin-top: 10px;
     font-size: 14px;
     font-style: italic;
     color: red;
