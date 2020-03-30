@@ -28,6 +28,10 @@ td {
   cursor: pointer;
 }
 
+tbody tr:hover {
+  background-color: lightgray;
+}
+
 .sortable {
   cursor: pointer;
 }
@@ -39,18 +43,34 @@ td {
   align-items: center;
 }
 
-.table-pagination a,
-.table-pagination i#button-prev,
-.table-pagination i#button-next {
-  padding: 10px;
-  margin: 10px;
-  border: 1px solid royalblue;
-  font-weight: bold;
+.table-pagination a {
+  display: inline-block;
+  min-width: 32px;
+  height: 32px;
+  margin-right: 8px;
+  margin-bottom: 10px;
+  line-height: 32px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
   cursor: pointer;
+  user-select: none; 
+}
+
+.table-pagination i {
+  margin-right: 8px;
+}
+
+.table-pagination a:hover {
+  color: cornflowerblue;
+  border-color: cornflowerblue; 
 }
 
 .table-pagination .current-page {
-  background-color: royalblue;
+  color: cornflowerblue;
+  border-color: cornflowerblue;
 }
 
 /* END OF PAGINATION */

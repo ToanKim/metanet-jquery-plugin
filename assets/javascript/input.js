@@ -97,23 +97,25 @@ $("button#update").on('click', () => {
     }
 
     const checkedRow = $('input.check__box[type=checkbox]:checked');
-    $.each(checkedRow.closest('td').nextAll(), function (index) {
-        const input = $(this).data('input');
-        const formInput = $(`form input[data-input=${input}]`);
-        const type = formInput.data('type');
-
-        $(this).html(type == 'money' ? parseInt(formInput.val()).toLocaleString('en') : formInput.val());
-    })
-    checkedRow.prop('checked', false);
-
-    // Clear form
-    clearForm();
-
-    // .add and .update class
-    const row = checkedRow.closest('tr');
-    row.removeClass('chosen');
-    if (!row.hasClass('add')) {
-        row.addClass('update');
+    if (checkedRow.length == 1) {
+        $.each(checkedRow.closest('td').nextAll(), function (index) {
+            const input = $(this).data('input');
+            const formInput = $(`form input[data-input=${input}]`);
+            const type = formInput.data('type');
+    
+            $(this).html(type == 'money' ? parseInt(formInput.val()).toLocaleString('en') : $.trim(formInput.val()).replace(/\s+/g, " "));
+        })
+        checkedRow.prop('checked', false);
+    
+        // Clear form
+        clearForm();
+    
+        // .add and .update class
+        const row = checkedRow.closest('tr');
+        row.removeClass('chosen');
+        if (!row.hasClass('add')) {
+            row.addClass('update');
+        }
     }
 })
 
@@ -131,7 +133,7 @@ $("button#add").on("click", () => {
             <td><input type="checkbox" class="check__box"></td>
             <td data-input="id"></td>
             ${detail.map((item, index) => {
-                return `<td data-input=${item.name}>${item.name === 'employee_salary' ? parseInt(item.value).toLocaleString('en') : item.value}</td>`
+                return `<td data-input=${item.name}>${item.name === 'employee_salary' ? parseInt(item.value).toLocaleString('en') : $.trim(item.value).replace(/\s+/g, " ")}</td>`
             }).join('')}
         </tr>`
     );
@@ -148,7 +150,7 @@ $("button#delete").on("click", () => {
 
     // Add .delete class
     checkedRow.each(function (index) {
-        $(this).addClass('delete');
+        $(this).addClass('delete').removeClass('chosen');
         $(this).find('td input[type=checkbox]').prop('checked', false).removeClass('check__box');
     })
 
@@ -160,7 +162,7 @@ function isValid() {
     $('#form-detail input').removeClass('border--invalid');
     let errors = [];
     $('#form-detail input').each(function (index) {
-        if ($(this).prop('required') && $(this).val().toString() === '') {
+        if ($(this).prop('required') && $(this).val() == '') {
             errors.push({
                 name: `${$(this).siblings('label').html()} input`,
                 type: `Empty Field`,
@@ -169,7 +171,7 @@ function isValid() {
             return;
         }
 
-        if ($(this).data('input') === 'employee_name' && /^[a-zA-Z]+(\s[a-zA-Z]+)*$/g.test($(this).val().toString()) == false) {
+        if ($(this).data('input') === 'employee_name' && /^[a-zA-Z]+(\s[a-zA-Z]+)*$/g.test($.trim($(this).val()).replace(/\s+/g, " ")) == false) {
             errors.push({
                 name: `${$(this).siblings('label').html()} input`,
                 type: `Invalid Name`

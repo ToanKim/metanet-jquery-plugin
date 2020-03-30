@@ -22,17 +22,18 @@
 }
 
 .update {
-  background-color: peru;
+  background-color: #ffcab1;
 }
 
 .add {
-  background-color: lime;
+  background-color: #95ff9e;
 }
 
 .delete {
   opacity: 0.5;
   pointer-events: none;
-  cursor: not-allowed !important;
+  background-color: #ff9090;
+  /* cursor: not-allowed !important; */
 }
 
 .sortable {
@@ -84,22 +85,4 @@
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
-}
-
-.form__container #form-detail div.error__box {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  color: red;
-}
-
-.form__container #form-detail div.error__box p{
-  padding: 10px 0;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.form__container #form-detail .border--invalid {
-  border-color: red;
-  border-width: 2px;
 }

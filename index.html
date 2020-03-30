@@ -42,12 +42,29 @@
 
                     <div>
                         <label for="age-input">Age</label>
-                        <input data-input="employee_age" data-type="number" type="number" id="age-input" name="employee_age" min="21" max="64" placeholder="e.g 21" required>
+                        <input  data-input="employee_age" 
+                                data-type="number" 
+                                type="number" 
+                                id="age-input" 
+                                name="employee_age" 
+                                min="21" 
+                                max="64" 
+                                placeholder="e.g 21"
+                                onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                required>
                     </div>
 
                     <div>
                         <label for="salary-input">Salary</label>
-                        <input data-input="employee_salary" data-type="money" type="number" id="salary-input" name="employee_salary" min="0" placeholder="e.g 10000000" required>
+                        <input  data-input="employee_salary" 
+                                data-type="money" 
+                                type="number" 
+                                id="salary-input" 
+                                name="employee_salary" 
+                                min="0" 
+                                placeholder="e.g 10000000"
+                                onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                required>
                     </div>
 
                     <div class="error__box"></div>

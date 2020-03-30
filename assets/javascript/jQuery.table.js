@@ -2,7 +2,7 @@
     $.fn.table = function(data, userOptions) {
         const defaultOptions = {
             pagination: {
-                limit: 10,
+                limit: 2,
                 step: 2,
             },
             columns: {},
@@ -91,7 +91,7 @@
             }
 
             // Re-render pagination
-            $.renderPagination(allOptions.pagination.limit, allOptions.pagination.step, parseInt($('a.current-page').html()))
+            $.renderPagination(allOptions.pagination.limit, allOptions.pagination.step, parseInt($('a.current-page p').html()))
         })
 
         // End of Event listeners
@@ -208,37 +208,45 @@
         const pageStep = allOptions.pagination.step;
 
         $('.table-pagination').append(
-            `<a id="button-prev">&#9668;</a>
+            `<a id="button-prev">&#8249;</a>
             <span class="pagination__box"></span>
-            <a id="button-next">&#9658;</a>`
+            <a id="button-next">&#8250;</a>`
         )
 
         $.renderPagination(pageLimit, pageStep);
 
         // Event handlers for navigating
         $('.table-pagination').on('click', '#button-prev', function () {
-            let current = $('a.current-page').eq(0).html();
+            let current = $('a.current-page p').html();
 
             if (parseInt(current) - 1 >= 1) {
-                $('a.current-page').eq(0).removeClass('current-page');
+                $('a.current-page').removeClass('current-page');
                 // Call render function
                 $.renderPagination(pageLimit, pageStep, parseInt(current) - 1);
+            } else {
+                $('a.current-page').removeClass('current-page');
+                // Call render function
+                $.renderPagination(pageLimit, pageStep, Math.ceil($('tbody tr').length / pageLimit ));
             }
 
         })
 
         $('.table-pagination').on('click', '#button-next', function () {
-            let current = $('a.current-page').eq(0).html();
+            let current = $('a.current-page p').html();
 
             if (parseInt(current) + 1 <= Math.ceil($('tbody tr').length / pageLimit )) {
                 $('a.current-page').eq(0).removeClass('current-page');
                 // Call render function
                 $.renderPagination(pageLimit, pageStep, parseInt(current) + 1);
+            } else {
+                $('a.current-page').eq(0).removeClass('current-page');
+                // Call render function
+                $.renderPagination(pageLimit, pageStep, 1);
             }
         })
 
         $('.table-pagination').on('click', '.page-index', function () {
-            let index = $(this).html();
+            let index = $(this).find('p').html();
             // Call render function
             $.renderPagination(pageLimit, pageStep, parseInt(index));
         })
@@ -279,7 +287,7 @@
 
         $('.table-pagination span.pagination__box').empty().append(code);
         $('.table-pagination span.pagination__box a').each(function (i) {
-            if ($(this).html() === index.toString()) {
+            if ($(this).find('p').html() === index.toString()) {
                 $(this).addClass('current-page')
             }
         })
@@ -291,14 +299,14 @@
 
     $.renderDots = function (isStart, number = 1) {
         return isStart ? 
-                `<a class="page-index">${number}</a><i>...</i>` : 
-                `<i>...</i><a class="page-index">${number}</a>`;
+                `<a class="page-index"><p>${number}</p></a><i>...</i>` : 
+                `<i>...</i><a class="page-index"><p>${number}</p></a>`;
     }
 
     $.renderNumber = function (start, end) {
         let tempStr = '';
         for (let i = start; i <= end; i++) {
-            tempStr += `<a class="page-index">${i}</a>`;
+            tempStr += `<a class="page-index"><p>${i}</p></a>`;
         }
         return tempStr;
     }
