@@ -6,15 +6,15 @@
 
 .op__buttons button {
     width: 100px;
-}
-
-.op__buttons #update,
-.op__buttons #add,
-.op__buttons #delete,
-.op__buttons #save {
+    box-shadow: 0px 4px #999;
     padding: 10px 20px;
     border: 1px solid #000;
     border-radius: 5px;
+}
+
+.op__buttons button:active {
+    box-shadow: 0px 2px #999;
+    transform: translateY(2px);
 }
 
 .op__buttons #update {
