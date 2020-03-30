@@ -30,19 +30,26 @@
             </div>
             <div class="form__container">
                 <form id="form-detail">
-                    <div>
+                    <div class="form-control">
                         <label for="id">Id</label>
-                        <input data-input="id" type="text" id="id" name="id" value="" disabled>
+                        <div class="input-control">
+                            <input data-input="id" type="text" id="id" name="id" value="" disabled>
+                            <p class="error__text"></p>
+                        </div>
                     </div>
 
-                    <div>
+                    <div class="form-control">
                         <label for="name-input">Employee Name</label>
-                        <input data-input="employee_name" data-type="name" type="text" id="name-input" name="employee_name" value="" placeholder="e.g John Doe" pattern="[a-zA-Z\s]+" required>
+                        <div class="input-control">
+                            <input data-input="employee_name" data-type="name" type="text" id="name-input" name="employee_name" value="" placeholder="e.g John Doe" pattern="[a-zA-Z\s]+" required>
+                            <p class="error__text"></p>
+                        </div>
                     </div>
 
-                    <div>
+                    <div class="form-control">
                         <label for="age-input">Age</label>
-                        <input  data-input="employee_age" 
+                        <div class="input-control">
+                            <input  data-input="employee_age" 
                                 data-type="number" 
                                 type="number" 
                                 id="age-input" 
@@ -52,11 +59,14 @@
                                 placeholder="e.g 21"
                                 onkeypress='return event.charCode >= 48 && event.charCode <= 57'
                                 required>
+                            <p class="error__text"></p>
+                        </div>
                     </div>
 
-                    <div>
+                    <div class="form-control">
                         <label for="salary-input">Salary</label>
-                        <input  data-input="employee_salary" 
+                        <div class="input-control">
+                            <input  data-input="employee_salary" 
                                 data-type="money" 
                                 type="number" 
                                 id="salary-input" 
@@ -65,6 +75,8 @@
                                 placeholder="e.g 10000000"
                                 onkeypress='return event.charCode >= 48 && event.charCode <= 57'
                                 required>
+                            <p class="error__text"></p>
+                        </div>
                     </div>
 
                     <div class="error__box"></div>

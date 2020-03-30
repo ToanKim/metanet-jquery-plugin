@@ -159,48 +159,34 @@ $("button#delete").on("click", () => {
 });
 
 function isValid() {
-    $('#form-detail input').removeClass('border--invalid');
-    let errors = [];
+    $('#form-detail input').removeClass('border--invalid').siblings('p.error__text').empty();
+    let isValid = true;
     $('#form-detail input').each(function (index) {
         if ($(this).prop('required') && $(this).val() == '') {
-            errors.push({
-                name: `${$(this).siblings('label').html()} input`,
-                type: `Empty Field`,
-            })
+            $(this).siblings('p.error__text').html('Empty Field or Invalid Value');
             $(this).addClass('border--invalid');
+            isValid = false;
             return;
         }
 
         if ($(this).data('input') === 'employee_name' && /^[a-zA-Z]+(\s[a-zA-Z]+)*$/g.test($.trim($(this).val()).replace(/\s+/g, " ")) == false) {
-            errors.push({
-                name: `${$(this).siblings('label').html()} input`,
-                type: `Invalid Name`
-            })
+            $(this).siblings('p.error__text').html('Invalid Name');
             $(this).addClass('border--invalid');
+            isValid = false;
 
         } else if ($(this).data('input') === 'employee_age' && ($(this).val() < 21 || $(this).val() > 64)) {
-            errors.push({
-                name: `${$(this).siblings('label').html()} input`,
-                type: `Invalid Age (from 21 - 64)`
-            })
+            $(this).siblings('p.error__text').html('Invalid Age (from 21 - 64)');
             $(this).addClass('border--invalid');
+            isValid = false;
 
         } else if ($(this).data('input') === 'employee_salary' && $(this).val() < 0) {
-            errors.push({
-                name: `${$(this).siblings('label').html()} input`,
-                type: `Invalid Salary (greater than 0)`
-            })
+            $(this).siblings('p.error__text').html('Invalid Salary (greater than 0)');
             $(this).addClass('border--invalid');
-
+            isValid = false;
         }
     })
 
-    const error_box = $('#form-detail .error__box').empty();
-    errors.map(error => {
-        error_box.append(`<p>${error.name}: ${error.type}</p>`);
-    })
-
-    return errors.length == 0 ? true : false;
+    return isValid;
 }
 
 function clearForm() {
