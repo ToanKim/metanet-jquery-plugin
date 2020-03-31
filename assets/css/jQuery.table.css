@@ -5,7 +5,11 @@ table {
 table,
 td,
 th {
-  border: 1px solid black;
+  border: 1px solid #d9d9d9;
+}
+
+th {
+  color: white;
 }
 
 thead tr {
@@ -24,10 +28,6 @@ th {
   background-color: lightgray;
 }
 
-td {
-  cursor: pointer;
-}
-
 tbody tr:hover {
   background-color: lightgray;
 }
@@ -41,6 +41,8 @@ tbody tr:hover {
   display: flex;
   /* justify-content: center; */
   align-items: center;
+  margin: 10px 0;
+  justify-content: center;
 }
 
 .table-pagination a {
@@ -48,7 +50,6 @@ tbody tr:hover {
   min-width: 32px;
   height: 32px;
   margin-right: 8px;
-  margin-bottom: 10px;
   line-height: 32px;
   text-align: center;
   vertical-align: middle;
