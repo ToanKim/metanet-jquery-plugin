@@ -57,9 +57,9 @@
             }
         })
         
-        $(this).on('click', 'tbody tr', function (event) {
-            $(this).find('input.check__box[type=checkbox]').trigger('click');
-        })
+        // $(this).on('click', 'tbody tr', function (event) {
+        //     $(this).find('input.check__box[type=checkbox]').trigger('click');
+        // })
 
 
         // Sort table
@@ -98,7 +98,6 @@
 
         $(this).append(
             `
-            <div class="table-pagination"></div>
             <table>
                 <thead>
                     <tr>
@@ -119,7 +118,9 @@
                 <tbody>
                         
                 </tbody>
-            </table>`
+            </table>
+            <div class="table-pagination"></div>
+            `
         );
 
 
@@ -139,7 +140,7 @@
                 $(this).find('table thead th').removeClass('resizing');
                 isColResizing = false;
                 // Enable pointer events on other elements
-                $('table thead th.sortable, table tbody tr').css("pointer-events", "auto");
+                $('table thead th.sortable').css("pointer-events", "auto");
 
                 event.stopPropagation();
             })
