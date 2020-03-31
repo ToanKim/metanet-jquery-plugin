@@ -2,7 +2,7 @@
     $.fn.table = function(data, userOptions) {
         const defaultOptions = {
             pagination: {
-                limit: 5,
+                limit: 10,
                 step: 2,
             },
             columns: {},
