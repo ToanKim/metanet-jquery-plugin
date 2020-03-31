@@ -6,8 +6,9 @@
 
 .op__buttons button {
     width: 100px;
-    padding: 10px 20px;
+    padding: 15px 20px;
     border: 1px solid rgb(139, 139, 139);
+    /* border: transparent; */
     border-radius: 5px;
     margin-right: 10px;
 }
@@ -30,6 +31,7 @@
 
 .op__buttons #save {
     background-color: cornflowerblue;
+
 }
 
 .form__container {
