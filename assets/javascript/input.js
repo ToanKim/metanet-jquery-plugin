@@ -123,8 +123,8 @@ $("button#add").on("click", () => {
 
     // Add new row to the table
     $("table tbody").prepend(
-        `<tr class="add">
-            <td><input type="checkbox" class="check__box"></td>
+        `<tr class="add${$('input#check-all[type=checkbox]').prop('checked') ? ' chosen' : ''}">
+            <td><input type="checkbox" class="check__box" ${$('input#check-all[type=checkbox]').prop('checked') ? 'checked' : ''}></td>
             <td data-input="id"></td>
             ${detail.map((item, index) => {
                 return `<td data-input=${item.name}>${item.name === 'employee_salary' ? parseInt(item.value).toLocaleString('en') : $.trim(item.value).replace(/\s+/g, " ")}</td>`

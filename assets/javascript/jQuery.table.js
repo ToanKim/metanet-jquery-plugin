@@ -138,12 +138,14 @@
             })
 
             $(document).mouseup(function (event) {
-                $(this).find('table thead th').removeClass('resizing');
-                isColResizing = false;
-                // Enable pointer events on other elements
-                $('table thead th.sortable').css("pointer-events", "auto");
+                if (isColResizing) {
+                    $(this).find('table thead th').removeClass('resizing');
+                    isColResizing = false;
+                    // Enable pointer events on other elements
+                    $('table thead th.sortable').css("pointer-events", "auto");
 
-                event.stopPropagation();
+                    event.stopPropagation();
+                }
             })
 
             $(this).on('mousedown', 'table thead th div.resizer', function (event) {
@@ -152,7 +154,7 @@
                 resizingPosX = event.pageX;
                 isColResizing = true;
                 // Disable pointer events on other elements
-                $('table thead th.sortable, table tbody tr').css("pointer-events", "none");
+                $('table thead th.sortable').css("pointer-events", "none");
 
                 event.stopPropagation();
             })
