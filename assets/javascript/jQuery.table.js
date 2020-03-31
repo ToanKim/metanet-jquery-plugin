@@ -142,7 +142,7 @@
                     $(this).find('table thead th').removeClass('resizing');
                     isColResizing = false;
                     // Enable pointer events on other elements
-                    $('table thead th.sortable').css("pointer-events", "auto");
+                    $('table thead th.sortable, table tbody td').css("pointer-events", "");
 
                     event.stopPropagation();
                 }
@@ -154,7 +154,7 @@
                 resizingPosX = event.pageX;
                 isColResizing = true;
                 // Disable pointer events on other elements
-                $('table thead th.sortable').css("pointer-events", "none");
+                $('table thead th.sortable, table tbody td').css("pointer-events", "none");
 
                 event.stopPropagation();
             })
