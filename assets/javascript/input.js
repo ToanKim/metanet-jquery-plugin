@@ -116,6 +116,8 @@ $("button#update").on('click', () => {
         if (!row.hasClass('add')) {
             row.addClass('update');
         }
+    } else {
+        alert('You can only update 1 record at a time');
     }
 })
 
