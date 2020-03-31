@@ -95,29 +95,21 @@ $("button#update").on('click', () => {
     if (isValid() === false) {
         return;
     }
+    const updatingRow = $('table tbody tr.updating');
+    updatingRow.find('td:not(:first-child)').each(function (index) {
+        const input = $(this).data('input');
+        const formInput = $(`form input[data-input=${input}]`);
+        const type = formInput.data('type');
+        $(this).html(type == 'money' ? parseInt(formInput.val()).toLocaleString('en') : $.trim(formInput.val()).replace(/\s+/g, " "));
+    })
 
-    const checkedRow = $('input.check__box[type=checkbox]:checked');
-    if (checkedRow.length == 1) {
-        $.each(checkedRow.closest('td').nextAll(), function (index) {
-            const input = $(this).data('input');
-            const formInput = $(`form input[data-input=${input}]`);
-            const type = formInput.data('type');
-    
-            $(this).html(type == 'money' ? parseInt(formInput.val()).toLocaleString('en') : $.trim(formInput.val()).replace(/\s+/g, " "));
-        })
-        checkedRow.prop('checked', false);
-    
-        // Clear form
-        clearForm();
-    
-        // .add and .update class
-        const row = checkedRow.closest('tr');
-        row.removeClass('chosen');
-        if (!row.hasClass('add')) {
-            row.addClass('update');
-        }
-    } else {
-        alert('You can only update 1 record at a time');
+    // Clear fields
+    clearForm();
+
+    // Remove updating status
+    updatingRow.removeClass('updating')
+    if (!updatingRow.hasClass('add')) {
+        updatingRow.addClass('update')
     }
 })
 
@@ -139,25 +131,21 @@ $("button#add").on("click", () => {
             }).join('')}
         </tr>`
     );
-    
-    // Clear form
-    // clearForm();
-
-
 });
 
 $("button#delete").on("click", () => {
     // Get only rows that have been chosen and not yet deleted
     const checkedRow = $('table tbody tr.chosen:not(".delete")');
-
+    
+    // If is updating, trigger click again to remove the class
+    if (checkedRow.hasClass('updating')) {
+        checkedRow.find('td:not(:first-child)').first().trigger('click');
+    }
     // Add .delete class
     checkedRow.each(function (index) {
         $(this).addClass('delete').removeClass('chosen');
         $(this).find('td input[type=checkbox]').prop('checked', false).removeClass('check__box');
     })
-
-    // Clear form
-    clearForm();
 });
 
 function isValid() {

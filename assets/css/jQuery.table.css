@@ -8,6 +8,10 @@ th {
   border: 1px solid #d9d9d9;
 }
 
+td:not(:first-child) {
+  cursor: pointer;
+}
+
 th {
   color: white;
 }
@@ -24,13 +28,20 @@ th {
   vertical-align: middle;
 }
 
-.chosen {
+.chosen td:first-child {
+  background-color: #ff9090;
+}
+
+tbody tr:hover td:not(:first-child) {
+  background-color: rgb(231, 230, 230);
+}
+
+
+tbody tr.updating td:not(:first-child) {
   background-color: lightgray;
 }
 
-tbody tr:hover {
-  background-color: lightgray;
-}
+
 
 .sortable {
   cursor: pointer;

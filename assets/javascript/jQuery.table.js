@@ -33,22 +33,6 @@
             } else {
                 record.removeClass('chosen');
             }
-            
-            // THIS MAY NOT BE PART OF THE PLUGIN
-            // If there is only 1 checked box, push to detail form to edit
-            if ($('input.check__box[type=checkbox]:checked').length == 1) {
-                $.each($('input.check__box[type=checkbox]:checked').closest('td').nextAll(), function (index) {
-                    const input = $(this).data('input');
-                    $(`form input[data-input=${input}]`).val($(this).html().replace(/,/g, ''));
-                })
-            } else {
-                // Empty form
-                $('form input').each(function (index) {
-                    $(this).val($(this).prop('defaultValue'))
-                })
-
-            }
-            // END OF PART MAY NOT BE IN THE PLUGIN
 
             if ($('input.check__box[type=checkbox]:checked').length == $('input.check__box[type=checkbox]').length) {
                 $('input#check-all[type=checkbox]').prop('checked', true);
@@ -57,9 +41,26 @@
             }
         })
         
-        // $(this).on('click', 'tbody tr', function (event) {
-        //     $(this).find('input.check__box[type=checkbox]').trigger('click');
-        // })
+        $(this).on('click', 'tbody tr td:not(:first-child)', function (event) {
+            const row = $(this).closest('tr');
+            if (row.hasClass('updating')) {
+                row.removeClass('updating');
+
+                // Clear form
+                $('form input').each(function (index) {
+                    $(this).val($(this).prop('defaultValue'))
+                })
+            } else {
+                $('table tbody tr').removeClass('updating');
+                row.addClass('updating');
+
+                // Bind data
+                row.find('td:not(:first-child)').each(function (index) {
+                    const input = $(this).data('input');
+                    $(`form input[data-input=${input}]`).val($(this).html().replace(/,/g, ''));
+                })
+            }
+        })
 
 
         // Sort table

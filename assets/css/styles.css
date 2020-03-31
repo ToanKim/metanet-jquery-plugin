@@ -20,19 +20,18 @@
   width: 50%;
 }
 
-.update {
+.update td:not(:first-child) {
   background-color: #ffcab1;
 }
 
-.add {
+.add td:not(:first-child) {
   background-color: #95ff9e;
 }
 
-.delete {
+table tbody tr.delete td {
   opacity: 0.5;
   pointer-events: none;
   background-color: #ff9090;
-  /* cursor: not-allowed !important; */
 }
 
 .sortable {
