@@ -102,8 +102,9 @@
             <table>
                 <thead>
                     <tr>
-                        <th>
+                        <th class="checkbox__container">
                             <input type="checkbox" id="check-all">
+                            <span class="checkmark"></span>
                         </th>
                         ${
                             Object.keys(allOptions.columns).map((item) => {
@@ -199,7 +200,7 @@
         $('table tbody').append(
             data.map(record => {
                 return `<tr>
-                    <td><input type="checkbox" class="check__box"></td>
+                    <td class="checkbox__container"><input type="checkbox" class="check__box"><span class="checkmark"></span></td>
                     ${Object.keys(allOptions.columns).map((attr, index) => {
                         return `<td data-input=${attr}>${allOptions.columns[attr].type === 'money' ? parseInt(record[attr]).toLocaleString('en') : record[attr] }</td>`;
                     }).join('')}

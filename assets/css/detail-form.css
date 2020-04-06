@@ -5,12 +5,15 @@
 }
 
 .op__buttons button {
-    width: 100px;
-    padding: 15px 20px;
+    min-width: 120px;
+    padding: 10px 25px;
     border: 1px solid rgb(139, 139, 139);
     /* border: transparent; */
     border-radius: 5px;
     margin-right: 10px;
+    color: #fff;
+    background-repeat: repeat-x;
+
 }
 
 .op__buttons button:hover {
@@ -18,20 +21,27 @@
 }
 
 .op__buttons #update {
-    background-color: #ffcab1;
+    background-color: #f0ad4e;
+    background-image: linear-gradient(to bottom,#f0ad4e 0,#eb9316 100%);
+    border-color: #e38d13;
 }
 
 .op__buttons #add {
-    background-color: #95ff9e;
+    background-color: #5cb85c;
+    background-image: linear-gradient(to bottom,#5cb85c 0,#419641 100%);
+    border-color: #3e8f3e;
 }
 
 .op__buttons #delete {
-    background-color: #ff9090;
+    background-color: #d9534f;
+    background-image: linear-gradient(to bottom,#d9534f 0,#c12e2a 100%);
+    border-color: #b92c28;
 }
 
 .op__buttons #save {
-    background-color: cornflowerblue;
-
+    background-color: #5bc0de;
+    background-image: linear-gradient(to bottom,#5bc0de 0,#2aabd2 100%);
+    border-color: #28a4c9;
 }
 
 .form__container {

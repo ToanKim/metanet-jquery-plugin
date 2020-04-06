@@ -17,7 +17,7 @@ th {
 }
 
 thead tr {
-  background-color: cornflowerblue;
+  background-color: #0078d4;
   font-weight: bold;
 }
 
@@ -28,20 +28,71 @@ th {
   vertical-align: middle;
 }
 
-.chosen td:first-child {
-  background-color: #ff9090;
+.chosen td {
+  background-color: rgba(0, 120, 212, 0.5);
 }
 
-tbody tr:hover td:not(:first-child) {
-  background-color: rgb(231, 230, 230);
-}
-
-
-tbody tr.updating td:not(:first-child) {
-  background-color: lightgray;
+tbody tr:hover td {
+  background-color: rgba(0, 120, 212, 0.15);
 }
 
 
+tbody tr.updating td {
+  background-color: rgba(0, 120, 212, 0.35);
+}
+
+/* CHECKBOX */
+table .checkbox__container {
+  position: relative;
+}
+
+.checkbox__container input[type="checkbox"] {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  z-index: 50;
+  cursor: pointer;
+
+}
+
+.checkbox__container .checkmark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 15px;
+  height: 15px;
+  background-color: #eee;
+
+  border: 0.5px solid #0078d4;
+  border-radius: 3px;
+}
+
+.checkbox__container .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox__container input[type="checkbox"]:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox__container .checkmark:after {
+  left: 4px;
+  /* top: 5px; */
+  width: 4px;
+  height: 8px;
+  border: solid #0078d4;
+  color: #0078d4;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/*  */
 
 .sortable {
   cursor: pointer;

@@ -20,11 +20,15 @@
   width: 50%;
 }
 
-.update td:not(:first-child) {
-  background-color: #ffcab1;
+.container .op-container {
+  width: 35%;
 }
 
-.add td:not(:first-child) {
+.update td {
+  background-color: #f0ad4e;
+}
+
+.add td {
   background-color: #95ff9e;
 }
 

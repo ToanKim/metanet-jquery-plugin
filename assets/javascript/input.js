@@ -37,79 +37,105 @@ $("button#save").on("click", () => {
         requestArray.push(updateData(data));
     })
 
-    $('.loading-container').show();
-    $.when(...requestArray).done(function (){
+    if (requestArray.length === 0) {
+        alert('Nothing to save');
+    } else {
+        $.when(...requestArray).done(function (){
 
-        // Clear fields
-        $('form input').each(function (index) {
-            $(this).val($(this).prop('defaultValue'));
-        });
-
-        // Clear table
-        $('.table-container').empty();
-        $('.table-container').unbind();
-
-        // Kinda redundant, don't know how to resolve yet
-        initData(function (data) {
-            $('.table-container').table(data,
-                {
-                    columns: {
-                        id: {
-                            name: 'ID',
-                            type: 'number',
-                            max_width: '100px',
-                            min_width: '30px',
-                            sortable: true,
-                        },
-                        employee_name: {
-                            name: 'Employee Name',
-                            type: 'text',
-                            max_width: '250px',
-                            min_width: '50px',
-                            sortable: true,
-                        },
-                        employee_age: {
-                            name: 'Age',
-                            type: 'number',
-                            max_width: '250px',
-                            min_width: '50px',
-                            sortable: true,
-                        },
-                        employee_salary: {
-                            name: 'Salary',
-                            type: 'money',
-                            max_width: '250px',
-                            min_width: '50px',
-                            sortable: true,
+            // Clear fields
+            $('form input').each(function (index) {
+                $(this).val($(this).prop('defaultValue'));
+            });
+    
+            // Clear table
+            $('.table-container').empty();
+            $('.table-container').unbind();
+    
+            alert('Saved successfully');
+    
+            // Kinda redundant, don't know how to resolve yet
+            initData(function (data) {
+                $('.table-container').table(data,
+                    {
+                        columns: {
+                            id: {
+                                name: 'ID',
+                                type: 'number',
+                                max_width: '100px',
+                                min_width: '30px',
+                                sortable: true,
+                            },
+                            employee_name: {
+                                name: 'Employee Name',
+                                type: 'text',
+                                max_width: '250px',
+                                min_width: '50px',
+                                sortable: true,
+                            },
+                            employee_age: {
+                                name: 'Age',
+                                type: 'number',
+                                max_width: '250px',
+                                min_width: '50px',
+                                sortable: true,
+                            },
+                            employee_salary: {
+                                name: 'Salary',
+                                type: 'money',
+                                max_width: '250px',
+                                min_width: '50px',
+                                sortable: true,
+                            }
                         }
                     }
-                }
-        )
+            )
+            })
         })
-    })
+    }
 
 
 });
 
-$("button#update").on('click', () => {
-    if (isValid() === false) {
-        return;
-    }
+// $("button#update").on('click', () => {
+//     if (isValid() === false) {
+//         return;
+//     }
+//     const updatingRow = $('table tbody tr.updating');
+//     updatingRow.find('td:not(:first-child)').each(function (index) {
+//         const input = $(this).data('input');
+//         const formInput = $(`form input[data-input=${input}]`);
+//         const type = formInput.data('type');
+//         $(this).html(type == 'money' ? parseInt(formInput.val()).toLocaleString('en') : $.trim(formInput.val()).replace(/\s+/g, " "));
+//     })
+
+//     // Clear fields
+//     clearForm();
+
+//     // Remove updating status
+//     updatingRow.removeClass('updating')
+//     if (!updatingRow.hasClass('add')) {
+//         updatingRow.addClass('update')
+//     }
+// })
+
+$("#form-detail input:not(#id)").on('input', function () {
     const updatingRow = $('table tbody tr.updating');
-    updatingRow.find('td:not(:first-child)').each(function (index) {
-        const input = $(this).data('input');
-        const formInput = $(`form input[data-input=${input}]`);
-        const type = formInput.data('type');
-        $(this).html(type == 'money' ? parseInt(formInput.val()).toLocaleString('en') : $.trim(formInput.val()).replace(/\s+/g, " "));
-    })
 
-    // Clear fields
-    clearForm();
+    if (updatingRow.length === 1) {
+        if (isValid() === false) {
+            return;
+        }
 
-    // Remove updating status
-    updatingRow.removeClass('updating')
-    if (!updatingRow.hasClass('add')) {
-        updatingRow.addClass('update')
+        updatingRow.find('td:not(:first-child)').each(function (index) {
+            const input = $(this).data('input');
+            const formInput = $(`form input[data-input=${input}]`);
+            const type = formInput.data('type');
+            $(this).html(type == 'money' ? parseInt(formInput.val()).toLocaleString('en') : $.trim(formInput.val()).replace(/\s+/g, " "));
+        })
+
+        if (!updatingRow.hasClass('add')) {
+            updatingRow.addClass('update');
+        }
     }
 })
 
@@ -124,7 +150,7 @@ $("button#add").on("click", () => {
     // Add new row to the table
     $("table tbody").prepend(
         `<tr class="add${$('input#check-all[type=checkbox]').prop('checked') ? ' chosen' : ''}">
-            <td><input type="checkbox" class="check__box" ${$('input#check-all[type=checkbox]').prop('checked') ? 'checked' : ''}></td>
+            <td class="checkbox__container"><input type="checkbox" class="check__box" ${$('input#check-all[type=checkbox]').prop('checked') ? 'checked' : ''}><span class="checkmark"></span></td>
             <td data-input="id"></td>
             ${detail.map((item, index) => {
                 return `<td data-input=${item.name}>${item.name === 'employee_salary' ? parseInt(item.value).toLocaleString('en') : $.trim(item.value).replace(/\s+/g, " ")}</td>`
