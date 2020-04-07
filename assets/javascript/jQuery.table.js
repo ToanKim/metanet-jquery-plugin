@@ -64,34 +64,29 @@
 
 
         // Sort table
-        $(this).on('click', 'thead th.sortable', function(index) {
-            $(this).siblings('th.sortable').data('dir', 'none');
-            const data = $(this).data('input');
-            const type = $(this).data('type');
+        $(this).on('click', 'thead th span svg.caret', function (event) {
+            const sign = $(this).hasClass('caret--up') ? 1 : -1;
+            const data = $(this).closest('th').data('input');
+            const type = $(this).closest('th').data('type');
 
-            let records = $(this).closest('thead').siblings('tbody').find('tr');
+            // Remove all class .active
+            $(this).closest('thead').find('th svg').removeClass('active');
+            $(this).addClass('active');
 
-            if ($(this).data('dir') === 'none') {
-                $(this).data('dir', 1);
+            const records = $(this).closest('thead').siblings('tbody').find('tr');
 
-                records.sort(function (a, b) {
-                    const A = $(a).find(`td[data-input="${data}"]`).html();
-                    const B = $(b).find(`td[data-input="${data}"]`).html();
+            records.sort(function (a, b) {
+                const A = $(a).find(`td[data-input="${data}"]`).html();
+                const B = $(b).find(`td[data-input="${data}"]`).html();
 
-                    if (type === 'text') {
-                        return A.localeCompare(B);
-                    } else if (type === 'number' || type === 'money') {
-                        return parseInt(A.replace(/,/g, '')) - parseInt(B.replace(/,/g, ''));
-                    }
-                    return 0;
-                })
-                $(this).closest('thead').siblings('tbody').append(records);
-            } else {
-                $(this).data('dir', +!$(this).data('dir'));
-                $(this).closest('thead').siblings('tbody').append(records.get().reverse())
-            }
-
-            // Re-render pagination
+                if (type === 'text') {
+                    return sign*A.localeCompare(B);
+                } else if (type === 'number' || type === 'money') {
+                    return sign*(parseInt(A.replace(/,/g, '')) - parseInt(B.replace(/,/g, '')));
+                }
+                return 0;
+            })
+            $(this).closest('thead').siblings('tbody').append(records);
             $.renderPagination(allOptions.pagination.limit, allOptions.pagination.step, parseInt($('a.current-page p').html()))
         })
 
@@ -108,11 +103,22 @@
                         </th>
                         ${
                             Object.keys(allOptions.columns).map((item) => {
-                                return `<th ${allOptions.columns[item].sortable ? 'class="sortable"' : ''}
-                                            style="max-width: ${allOptions.columns[item].max_width}; min-width: ${allOptions.columns[item].min_width}"
+                                return `<th style="max-width: ${allOptions.columns[item].max_width}; min-width: ${allOptions.columns[item].min_width}"
                                             data-input=${item}
                                             data-dir="none"
-                                            data-type=${allOptions.columns[item].type}>${allOptions.columns[item].name}</th>`;
+                                            data-type=${allOptions.columns[item].type}>
+                                                <span>${allOptions.columns[item].name}</span>
+                                                ${allOptions.columns[item].sortable ? 
+                                                    `<span class="caret__container">
+                                                        <svg viewBox="0 0 1024 1024" class="caret caret--up">
+                                                            <path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z"></path>
+                                                        </svg>
+                                                        <svg viewBox="0 0 1024 1024" class="caret caret--down">
+                                                            <path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"></path>
+                                                        </svg>
+                                                    </span>`
+                                                    : ''}
+                                            </th>`;
                             }).join('')
                         }
                     </tr>
@@ -142,8 +148,6 @@
                 if (isColResizing) {
                     $(this).find('table thead th').removeClass('resizing');
                     isColResizing = false;
-                    // Enable pointer events on other elements
-                    $('table thead th.sortable, table tbody td').css("pointer-events", "");
 
                     event.stopPropagation();
                 }
@@ -154,8 +158,6 @@
                 $(this).closest('th').addClass('resizing');
                 resizingPosX = event.pageX;
                 isColResizing = true;
-                // Disable pointer events on other elements
-                $('table thead th.sortable, table tbody td').css("pointer-events", "none");
 
                 event.stopPropagation();
             })

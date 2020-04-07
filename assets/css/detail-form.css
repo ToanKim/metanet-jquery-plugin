@@ -77,6 +77,17 @@
     box-sizing: border-box;
     word-wrap: break-word;
     word-break: break-all;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.form__container #form-detail div.form-control input:disabled {
+    cursor: not-allowed;
+}
+
+.form__container #form-detail div.form-control input:focus {
+    border-color: rgba(81, 203, 238, 1);
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1);
 }
 
 .form__container #form-detail div.form-control div.input-control .error__text {
