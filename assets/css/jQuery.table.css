@@ -26,6 +26,7 @@ th {
   padding: 10px 20px;
   text-align: center;
   vertical-align: middle;
+  word-wrap: break-word;
 }
 
 

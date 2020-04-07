@@ -204,7 +204,8 @@
                 return `<tr>
                     <td class="checkbox__container"><input type="checkbox" class="check__box"><span class="checkmark"></span></td>
                     ${Object.keys(allOptions.columns).map((attr, index) => {
-                        return `<td data-input=${attr}>${allOptions.columns[attr].type === 'money' ? parseInt(record[attr]).toLocaleString('en') : record[attr] }</td>`;
+                        return `<td style="max-width: ${allOptions.columns[attr].max_width}; min-width: ${allOptions.columns[attr].min_width}"
+                                    data-input=${attr}>${allOptions.columns[attr].type === 'money' ? parseInt(record[attr]).toLocaleString('en') : record[attr] }</td>`;
                     }).join('')}
                 </tr>`
             })    

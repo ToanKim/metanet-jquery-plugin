@@ -86,10 +86,7 @@
     </div>
 
     <script>
-        $(document).ready(() => {
-            initData(function (data) {
-                $('.table-container').table(data,
-                    {
+        const config = {
                         columns: {
                             id: {
                                 name: 'ID',
@@ -120,8 +117,11 @@
                                 sortable: true,
                             }
                         }
-                    }
-            )
+                    };
+
+        $(document).ready(() => {
+            initData(function (data) {
+                $('.table-container').table(data, config);
             })
         })
 

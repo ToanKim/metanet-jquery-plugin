@@ -10,7 +10,7 @@ const initData = (callback) => {
             callback(message);
         },
         error: (message) => {
-            console.error(message);
+            alert('Failed to fetch data');
         }
     });
 }
@@ -22,6 +22,9 @@ const createData = (data) => {
         data: data,
         accepts: 'application/json',
         dataType: 'json',
+        error: (message) => {
+            alert(`Failed to create record ${data}`);
+        }
     })
 }
 
@@ -32,6 +35,9 @@ const updateData = (data) => {
         data: data,
         accepts: 'application/json',
         dataType: 'json',
+        error: (message) => {
+            alert(`Failed to update record ${data.id}`)
+        }
     })
 }
 
@@ -42,5 +48,8 @@ const deleteData = (id) => {
         data: {},
         accepts: 'application/json',
         dataType: 'json',
+        error: (message) => {
+            alert(`Failed to delete record ${id}`);
+        }
     })
 }
