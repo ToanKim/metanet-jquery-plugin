@@ -160,6 +160,8 @@
                     $(this).find('table thead th').removeClass('resizing');
                     isColResizing = false;
 
+                    $(this).find('table thead th, table thead th svg.caret').css('pointer-events', '');
+
                     event.stopPropagation();
                 }
             })
@@ -169,6 +171,9 @@
                 $(this).closest('th').addClass('resizing');
                 resizingPosX = event.pageX;
                 isColResizing = true;
+
+                $(this).find('table thead th, table thead th svg.caret').css('pointer-events', 'none');
+
 
                 event.stopPropagation();
             })
