@@ -84,7 +84,7 @@ table .checkbox__container {
 }
 
 .checkbox__container .checkmark:after {
-  left: 4px;
+  left: 4.5px;
   width: 4px;
   height: 8px;
   border: solid #0078d4;
