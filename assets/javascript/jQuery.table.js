@@ -65,6 +65,8 @@
 
         // Sort table
         $(this).on('click', 'thead th span svg.caret', function (event) {
+            event.stopPropagation();
+
             const sign = $(this).hasClass('caret--up') ? 1 : -1;
             const data = $(this).closest('th').data('input');
             const type = $(this).closest('th').data('type');
@@ -90,6 +92,14 @@
             $.renderPagination(allOptions.pagination.limit, allOptions.pagination.step, parseInt($('a.current-page p').html()))
         })
 
+        $(this).on('click', 'thead th.sortable', function(event) {
+            if ($(this).find('span svg.caret.active').length === 0) {
+                $(this).find('span svg.caret--up').trigger('click');
+            } else {
+                $(this).find(`span svg.caret--${$(this).find('span svg.caret.active').hasClass('caret--up') ? 'down' : 'up'}`).trigger('click');
+            }
+        })
+
         // End of Event listeners
 
         $(this).append(
@@ -103,7 +113,8 @@
                         </th>
                         ${
                             Object.keys(allOptions.columns).map((item) => {
-                                return `<th style="max-width: ${allOptions.columns[item].max_width}; min-width: ${allOptions.columns[item].min_width}"
+                                return `<th ${allOptions.columns[item].sortable ? 'class="sortable"' : ''}
+                                            style="max-width: ${allOptions.columns[item].max_width}; min-width: ${allOptions.columns[item].min_width}"
                                             data-input=${item}
                                             data-dir="none"
                                             data-type=${allOptions.columns[item].type}>

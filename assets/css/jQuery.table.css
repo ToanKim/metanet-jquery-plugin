@@ -93,7 +93,11 @@ table .checkbox__container {
   transform: rotate(45deg);
 }
 
-/*  */
+/* SORTING */
+
+.sortable {
+  cursor: pointer;
+}
 
 table thead .caret__container {
   display: inline-flex;
